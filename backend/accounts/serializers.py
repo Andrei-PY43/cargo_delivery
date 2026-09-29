@@ -1,0 +1,55 @@
+from django.contrib.auth import get_user_model
+from rest_framework import serializers
+
+
+User = get_user_model()
+
+
+class RegisterSerializer(serializers.ModelSerializer):
+    password=serializers.CharField(write_only= True)
+    password2 = serializers.CharField(write_only=True)
+    email=serializers.EmailField(required=False)
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'password',
+            'password2',
+            'first_name',
+            'last_name',
+            'phone',
+            'email',
+
+        ]
+
+
+    def validate(self, data):
+        if data['password'] != data['password2']:
+            raise serializers.ValidationError(
+                'Пароли не совпадают'
+            )
+
+        return data
+
+    def create(self, validated_data):
+        validated_data.pop('password2')
+
+        user = User.objects.create_user(
+            **validated_data
+        )
+
+        return user
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'phone',
+            'email',
+            'role',
+        ]
