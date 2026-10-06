@@ -9,7 +9,7 @@ class User(AbstractUser):
         CLIENT = "client", "Клиент"
         DRIVER = "driver", "Водитель"
 
-    phone = models.CharField(max_length=12, unique=True)
+    phone = models.CharField(max_length=12)
 
     role = models.CharField(
         max_length=20,
@@ -21,7 +21,7 @@ class User(AbstractUser):
 class DriverProfile(models.Model):
     vehicle_model = models.CharField(max_length=60)
     vehicle_number = models.CharField(max_length=9)
-    vehicle_photo = models.ImageField(upload_to='drivers/vehicle/')
+    vehicle_photo = models.ImageField(upload_to='drivers/vehicle/',blank=True, null=True)
     capacity_tons = models.FloatField()
     volume_m3 = models.FloatField()
     license_number = models.CharField(max_length=60)

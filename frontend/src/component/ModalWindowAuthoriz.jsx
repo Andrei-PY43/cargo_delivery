@@ -1,10 +1,12 @@
 import { useContext, useState } from "react"
-import { Channel } from "../context/Wrapper.jsx"
+import { Channel } from "../context/AuthContext.jsx"
 
 export const ModalWindowAuthoriz = ({ handleCloseAuth }) => {
     const [userName, setUserName] = useState('')
     const [userPassword, setUserPassword] = useState('')
+    const [message, setMessage] = useState('')
     const { setUser } = useContext(Channel)
+
     async function handleAuthorization(event) {
         event.preventDefault()
 
@@ -16,57 +18,61 @@ export const ModalWindowAuthoriz = ({ handleCloseAuth }) => {
 
             const response = await fetch("http://127.0.0.1:8000/api/token/", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(authUser)
             }
             )
 
             const data = await response.json()
 
-            if (!response.ok) {
-                console.log("Ошибка авторизации:", data)
+            if (response.status === 400) {
+                setMessage("Проверьте введённые данные")
                 return
             }
 
-
-
+            if (!response.ok) {
+                setMessage("Ошибка авторизации")
+                return
+            }
             localStorage.setItem("access_token", data.access)
             localStorage.setItem("refresh_token", data.refresh)
 
-
-
             const meResponse = await fetch("http://127.0.0.1:8000/api/me/", {
                 method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${data.access}`
-                }
+                headers: { "Authorization": `Bearer ${data.access}` }
             }
             )
 
             const userData = await meResponse.json()
 
-            if (!meResponse.ok) {
-                console.log("Ошибка получения пользователя:", userData)
+            if (meResponse.status === 401) {
+                setMessage("Пройдите повторно авторизацию")
                 return
             }
 
-            
+            if (!meResponse.ok) {
+                setMessage("Ошибка получения пользователя")
+                return
+            }
+
+
             setUser(userData)
 
             handleCloseAuth()
 
         } catch (error) {
-            console.log("Ошибка соединения с сервером:", error)
+            setMessage("Ошибка связи")
+            console.log(error)
         }
     }
 
     return (
         <div className="modulAuth-drop" onClick={handleCloseAuth}>
             <div className="modulAuth" onClick={(event) => event.stopPropagation()}>
-                <button type="button" className="modulAuth-x" onClick={handleCloseAuth}> X </button>
-
+                <div className="message-button">
+                    {message && <p>{message}</p>}
+                    <button type="button" className="modulAuth-x" onClick={handleCloseAuth}> X </button>
+                </div>
                 <form onSubmit={handleAuthorization}>
 
                     <label htmlFor="userName"> Логин </label>

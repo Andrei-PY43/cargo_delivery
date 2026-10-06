@@ -12,7 +12,7 @@ class Order(models.Model):
     date_create_order = models.DateTimeField(auto_now_add=True)
     address_load = models.CharField(max_length=200)
     address_delivery = models.CharField(max_length=200)
-    date_delivery = models.DateTimeField(null=True, blank=True)
+    date_loading = models.DateTimeField(null=True, blank=True)
     cargo_description = models.TextField(blank=True, null=True,)
     cargo_weight_tons = models.FloatField(null=True, blank=True)
     cargo_volume_m3 = models.FloatField(null=True, blank=True)
@@ -30,7 +30,7 @@ class Order(models.Model):
             f'Заказ: Дата создания: {self.date_create_order}, '
             f'Адрес загрузки: {self.address_load}, '
             f'Адрес доставки: {self.address_delivery}, '
-            f'Дата доставки: {self.date_delivery}'
+            f'Дата погрузки: {self.date_loading}'
         )
 
 
@@ -42,7 +42,7 @@ class OrderDriver(models.Model):
 
 class CargoFoto(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='cargo_photo')
-    photo = models.ImageField(upload_to='cargo/%Y/%m/%d/')
+    photo = models.ImageField(upload_to='cargo/%Y/%m/%d/',blank=True, null=True)
 
     def __str__(self):
         return f'Фото заказа №{self.order.id}'

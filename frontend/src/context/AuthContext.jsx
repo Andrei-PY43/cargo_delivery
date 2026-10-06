@@ -1,14 +1,20 @@
 import { createContext, useEffect, useState } from "react";
 import { apiFetch } from "../apiFetch/apiFetch";
 
-const Channel = createContext()
+export const Channel = createContext()
 
-const Wrapper = ({ children }) => {
+export const Wrapper = ({ children }) => {
     const [user, setUser] = useState('')
     const [message, setMessage] = useState('')
     useEffect(() => {
 
         async function getUser() {
+            const accessToken = localStorage.getItem("access_token")
+
+            if (!accessToken) {
+                return
+            }
+            try{
             const meResponse = await apiFetch('/api/me/')
             const userData = await meResponse.json()
 
@@ -19,6 +25,10 @@ const Wrapper = ({ children }) => {
             }
 
             setUser(userData)
+        } catch (error) {
+            setMessage("Ошибка связи")
+            console.error(error);
+        }
         }
         getUser()
     }, []);

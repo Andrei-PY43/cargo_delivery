@@ -1,0 +1,33 @@
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    box-sizing: border-box;
+}
+
+.header-logo {
+    white-space: nowrap;
+}
+
+.header-nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    white-space: nowrap;
+}
+
+.nav-link {
+    text-decoration: none;
+}
+
+.header-user-name {
+    white-space: nowrap;
+}

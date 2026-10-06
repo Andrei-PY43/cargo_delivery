@@ -1,0 +1,72 @@
+.createOrder {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.create-order-title {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+.required-info {
+    margin: 0 0 25px;
+}
+
+.create-order-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.create-order-form label {
+    margin-top: 8px;
+}
+
+.create-order-form input:not([type="radio"]) {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px;
+}
+
+.create-order-form input[type="datetime-local"] {
+    width: 250px;
+}
+
+.create-order-form input[type="file"] {
+    padding: 5px 0;
+}
+
+.create-order-form > div {
+    margin-top: 12px;
+}
+
+.create-order-form > div > span {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.create-order-form > div label {
+    margin: 0 15px 0 5px;
+}
+
+.create-order-form button {
+    align-self: flex-start;
+    margin-top: 20px;
+    padding: 8px 18px;
+}
+
+.order-success {
+    margin-top: 25px;
+}
+
+.order-success p {
+    margin: 5px 0;
+}
+
+.create-order-message {
+    margin-top: 15px;
+}

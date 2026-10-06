@@ -1,0 +1,97 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    z-index: 1000;
+}
+
+.DriverDetailOrder {
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 600px;
+    max-width: 90vw;
+    max-height: 85vh;
+
+    padding: 25px;
+
+    background: white;
+
+    border: 1px solid #ccc;
+    border-radius: 10px;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+
+    z-index: 1001;
+}
+
+.DriverDetailOrder h1 {
+    margin: 0 0 25px;
+
+    font-size: 24px;
+    text-align: center;
+}
+
+.DriverDetailOrder p {
+    margin: 12px 0;
+
+    line-height: 1.5;
+}
+
+.close-x {
+    position: absolute;
+
+    top: 10px;
+    right: 10px;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    border: 1px solid #ccc;
+    border-radius: 50%;
+
+    font-size: 18px;
+    line-height: 28px;
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.close-window {
+    display: block;
+
+    margin: 25px auto 0;
+    padding: 10px 25px;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+@media (max-width: 650px) {
+    .DriverDetailOrder {
+        width: 95vw;
+        padding: 20px;
+    }
+
+    .DriverDetailOrder h1 {
+        font-size: 20px;
+    }
+}

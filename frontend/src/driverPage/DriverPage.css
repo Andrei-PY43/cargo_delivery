@@ -1,0 +1,37 @@
+.driver-page {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.active-orders-container {
+    width: 100%;
+}
+
+.active-orders-title {
+    margin: 0 0 15px;
+    font-size: 26px;
+}
+
+.active-order {
+    padding: 12px 0;
+    border-bottom: 1px solid;
+}
+
+.active-order p {
+    margin: 2px 0;
+    line-height: 1.4;
+}
+
+.active-order-button {
+    margin-top: 10px;
+    padding: 7px 16px;
+}
+
+.driver-message,
+.no-active-orders {
+    margin: 10px 0;
+}

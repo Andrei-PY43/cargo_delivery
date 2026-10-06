@@ -1,17 +1,20 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+
 from .models import User, DriverProfile
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(BaseUserAdmin):
+
     list_display = (
         "id",
         "username",
         "phone",
-        "email",
+        "role",
         "first_name",
         "last_name",
-        "role",
+        "email",
         "is_active",
     )
 
@@ -28,15 +31,31 @@ class UserAdmin(admin.ModelAdmin):
         "last_name",
     )
 
-    ordering = (
-        "username",
+    fieldsets = BaseUserAdmin.fieldsets + (
+        ("Дополнительная информация", {
+            "fields": (
+                "phone",
+                "role",
+            ),
+        }),
     )
 
-    list_per_page = 25
+    add_fieldsets = BaseUserAdmin.add_fieldsets + (
+        ("Дополнительная информация", {
+            "fields": (
+                "phone",
+                "role",
+                "first_name",
+                "last_name",
+                "email",
+            ),
+        }),
+    )
 
 
 @admin.register(DriverProfile)
 class DriverProfileAdmin(admin.ModelAdmin):
+
     list_display = (
         "id",
         "user",
@@ -55,8 +74,6 @@ class DriverProfileAdmin(admin.ModelAdmin):
         "license_number",
     )
 
-    ordering = (
-        "-date_created",
-    )
+    ordering = ("-date_created",)
 
     list_per_page = 25
