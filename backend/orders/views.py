@@ -10,7 +10,6 @@ from django.db import transaction
 def for_drive_status_search_orders(request):
     if not request.user.is_authenticated:
         return Response(status=401)
-
     if request.user.role != User.Role.DRIVER:
         return Response(status=403)
 
@@ -116,15 +115,18 @@ def for_driver_status_delivery(request,endpoint):
 
     if request.user.role != User.Role.DRIVER:
         return Response(status=403)
+    found_order = get_object_or_404(Order, id=endpoint)
+    if found_order.status != Order.Status.IN_PROGRESS:
+        return Response(status=409)
 
     found_order=get_object_or_404(Order, id=endpoint)
-    found_driver=get_object_or_404(
+    found_driver_order=get_object_or_404(
         OrderDriver,
         order=found_order,
         driver=request.user
     )
-    found_driver.delivery=True
-    found_driver.save()
+    found_driver_order.delivery=True
+    found_driver_order.save()
     return  Response(
         {"message":"груз доставлен"}
     )
@@ -137,7 +139,7 @@ def for_client_my_orders(request):
     if request.user.role != User.Role.CLIENT:
         return Response(status=403)
 
-    my_orders=Order.objects.filter(client=request.user)
+    my_orders=Order.objects.filter(client=request.user).exclude( status=Order.Status.DONE)
     data=[]
     for my_order in my_orders:
 
@@ -184,7 +186,7 @@ def for_driver_my_orders(request):
     if request.user.role != User.Role.DRIVER:
         return Response(status=403)
 
-    my_driver_order=OrderDriver.objects.filter(driver=request.user)
+    my_driver_order=OrderDriver.objects.filter(driver=request.user,delivery=False)
     data_orders=[]
     for object_DriverOder in my_driver_order:
         my_order=object_DriverOder.order
@@ -194,6 +196,7 @@ def for_driver_my_orders(request):
             'address_load': my_order.address_load,
             'address_delivery': my_order.address_delivery,
             'contact_phone': my_order.contact_phone,
+            'status': my_order.get_status_display(),
             'delivery': object_DriverOder.delivery
         })
     return Response (data_orders)
@@ -246,10 +249,54 @@ def for_client_create_order(request):
                 order=order,
                 photo=photo
             )
-
         return Response({
             'order_id': order.id,
             'message': 'Заказ успешно создан'
         }, status=201)
 
     return Response(serializer.errors, status=400)
+
+@api_view(['GET'])
+def for_driver_done_order(request):
+    if not request.user.is_authenticated:
+        return Response(status=401)
+    if request.user.role!=User.Role.DRIVER:
+        return Response(status=403)
+    done_orders = OrderDriver.objects.filter(
+        driver=request.user,
+        delivery=True
+    )
+    data_orders = []
+    for order_driver in done_orders:
+        order = order_driver.order
+
+        data_orders.append({
+            'order_id': order.id,
+            'date_loading': order.date_loading,
+            'address_load': order.address_load,
+            'address_delivery': order.address_delivery,
+            'contact_phone': order.contact_phone,
+        })
+    return Response(data_orders)
+
+@api_view(['GET'])
+def for_client_order_status_done(request):
+    if not request.user.is_authenticated:
+        return Response(status=401)
+    if request.user.role != User.Role.CLIENT:
+        return Response(status=403)
+    orders_client = Order.objects.filter(
+        client=request.user,
+        status=Order.Status.DONE
+    )
+    data = []
+    for order in orders_client:
+        data.append({
+            'order_id': order.id,
+            'date_loading': order.date_loading,
+            'address_load': order.address_load,
+            'address_delivery': order.address_delivery,
+            'status': order.status,
+        })
+    return Response(data)
+
