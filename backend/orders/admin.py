@@ -20,6 +20,7 @@ class OrderAdmin(admin.ModelAdmin):
         "address_load_info",
         "address_delivery_info",
         "status",
+        "porters_info",
         "required_drivers_count",
         "drivers_count",
         "free_drivers",
@@ -29,6 +30,12 @@ class OrderAdmin(admin.ModelAdmin):
     @admin.display(description="Заказ")
     def order_number(self, obj):
         return f"Заказ №{obj.id}"
+
+    @admin.display(description="Грузчики")
+    def porters_info(self, obj):
+        return "Да" if obj.porters else "Нет"
+
+    porters_info.short_description = "Грузчики"
 
     @admin.display(description="Клиент")
     def client_info(self, obj):
