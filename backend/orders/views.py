@@ -108,7 +108,7 @@ def for_driver_take_order(request,endpoint):
 
 
 
-@api_view(['POST'])
+@api_view(['PATCH'])
 def for_driver_status_delivery(request,endpoint):
     if not request.user.is_authenticated:
         return Response(status=401)
@@ -119,7 +119,7 @@ def for_driver_status_delivery(request,endpoint):
     if found_order.status != Order.Status.IN_PROGRESS:
         return Response(status=409)
 
-    found_order=get_object_or_404(Order, id=endpoint)
+
     found_driver_order=get_object_or_404(
         OrderDriver,
         order=found_order,
@@ -170,7 +170,7 @@ def for_client_my_orders(request):
             'cargo_volume_m3': my_order.cargo_volume_m3,
             'cargo_description': my_order.cargo_description,
             'porters': my_order.porters,
-            'status': my_order.status,
+            'status': my_order.get_status_display(),
             'drivers': data_drivers,
             'photos': data_photo,
     })
@@ -280,7 +280,7 @@ def for_driver_done_order(request):
     return Response(data_orders)
 
 @api_view(['GET'])
-def for_client_order_status_done(request):
+def for_client_order_done(request):
     if not request.user.is_authenticated:
         return Response(status=401)
     if request.user.role != User.Role.CLIENT:

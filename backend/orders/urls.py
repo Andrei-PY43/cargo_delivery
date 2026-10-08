@@ -1,5 +1,5 @@
 
-from .views import for_client_order_status_done,for_driver_done_order,for_driver_my_orders_detail,for_client_create_order,for_driver_my_orders, for_drive_status_search_orders,for_drive_orders_endpoint,for_driver_take_order,for_driver_status_delivery,for_client_my_orders
+from .views import for_client_order_done,for_driver_done_order,for_driver_my_orders_detail,for_client_create_order,for_driver_my_orders, for_drive_status_search_orders,for_drive_orders_endpoint,for_driver_take_order,for_driver_status_delivery,for_client_my_orders
 from django.urls import path
 urlpatterns = [
     path('driver/orders/search/', for_drive_status_search_orders),
@@ -11,5 +11,5 @@ urlpatterns = [
     path('client/order/create/', for_client_create_order),
     path('driver/my_orders/<int:endpoint>/',for_driver_my_orders_detail),
     path('driver/orders/done/',for_driver_done_order),
-    path('client/orders/done/',for_client_order_status_done)
+    path('client/orders/done/',for_client_order_done)
 ]
