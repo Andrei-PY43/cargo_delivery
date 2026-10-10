@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import { Channel } from "../context/AuthContext.jsx"
-
+import './ModalWindowAuthoriz.css'
 export const ModalWindowAuthoriz = ({ handleCloseAuth }) => {
     const [userName, setUserName] = useState('')
     const [userPassword, setUserPassword] = useState('')

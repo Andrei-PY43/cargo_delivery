@@ -12,7 +12,7 @@ import { DriverPage } from './driverPage/DriverPage.jsx';
 import { ClientPageisDone } from './clientPage/ClientPageisDone.jsx';
 import { ClientPageCreateOrder } from './clientPage/ClientPageCreateOrder.jsx';
 import { DriverPageisDone } from './driverPage/DriverPageisDone.jsx';
-
+import { Footer } from './component/Footer'
 import { NoFound } from './pages/NoFound.jsx';
 import { DriverPageMyOrders } from "./driverPage/DriverPageMyOrders.jsx";
 
@@ -46,6 +46,7 @@ function App() {
 
         <Route path='*' element={<NoFound />} />
       </Routes>
+      <Footer />
     </>
   )
 }

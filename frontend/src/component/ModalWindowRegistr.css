@@ -1,0 +1,94 @@
+.modulReg-drop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+/* ============ Модалка ============ */
+.modulReg {
+    background: #f0f0f0;
+    border-radius: 10px;
+    padding: 25px;
+    width: 100%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ============ Строка с крестиком и сообщением ============ */
+.message_and_button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.message_and_button p {
+    margin: 0;
+    color: #c0392b;
+    font-size: 14px;
+}
+
+/* ============ Крестик ============ */
+.modulReg-x {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #666;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin-left: auto;
+}
+
+.modulReg-x:hover {
+    background: #ddd;
+}
+
+/* ============ Метки ============ */
+.modulReg label {
+    display: block;
+    font-size: 13px;
+    color: #555;
+    margin-top: 10px;
+    margin-bottom: 4px;
+}
+
+/* ============ Поля ввода ============ */
+.modulReg input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.modulReg input:focus {
+    outline: none;
+    border-color: #888;
+}
+
+/* ============ Кнопка "Регистрация" ============ */
+.modulReg button[type="submit"] {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background: #4a4a4a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.modulReg button[type="submit"]:hover {
+    background: #333;
+}

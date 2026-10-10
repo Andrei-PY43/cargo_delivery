@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { apiFetch } from "../apiFetch/apiFetch"
 import { DriverFoundMyOrder } from "../component/DriverFoundMyOrder"
-import  "./DriverPageMyOrders.css"
+import "./DriverPageMyOrders.css"
 export const DriverPageMyOrders = () => {
     const [message, setMessage] = useState('')
     const [dataMyOrders, setDataMyOrders] = useState([])
     const [detailMyOrder, setDetailMyOrder] = useState(null)
+    const [messageDone,setMessageDone]=useState('')
     useEffect(() => {
         const asynFunc = async () => {
             try {
@@ -35,7 +36,7 @@ export const DriverPageMyOrders = () => {
     const handleDelivery = async (id) => {
         try {
             const response = await apiFetch(`/api/driver/orders/${id}/delivery/`, {
-                method: 'POST',
+                method: 'PATCH',
             }
             )
 
@@ -48,7 +49,10 @@ export const DriverPageMyOrders = () => {
                 setMessage('Вход только для водителей')
                 return
             }
-
+            if (response.status === 409) {
+                setMessageDone('Не может быть выполнено. Не все автомобили найдены.')
+                return
+            }
             if (!response.ok) {
                 setMessage('Ошибка запроса')
                 return
@@ -69,11 +73,12 @@ export const DriverPageMyOrders = () => {
     }
     return (
         <div>
-            {message ? <p>{message}</p> : dataMyOrders.length !== 0 ? (
+            {message ? <p>{message}</p> : dataMyOrders.length !== 0  ? (
                 <div>
                     {dataMyOrders.map(order => (
                         <div key={order.order_id} className="my_order">
-                            <p>Номер заказа: {order.order_id}</p>
+                            
+                            <h3>Номер заказа: {order.order_id}</h3>
                             <p>Дата погрузки: {order.date_loading}</p>
                             <p>Адрес погрузки: {order.address_load}</p>
                             <p>Адрес доставки: {order.address_delivery}</p>
@@ -91,6 +96,7 @@ export const DriverPageMyOrders = () => {
                     ))}
 
                 </div>) : (<p>Заказов нет</p>)}
+                {messageDone&&<p>{messageDone}</p>}
 
         </div>
     )

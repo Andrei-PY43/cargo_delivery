@@ -9,7 +9,7 @@ export const DriverFoundMyOrder = ({ id, closeWindow }) => {
 
         const ResponseFoundOrder = async () => {
             try {
-                const respons = await apiFetch(`/api/driver/my_orders/${Number(id)}/`)
+                const respons = await apiFetch(`/api/driver/my_orders/${id}/`)
                 if (respons.status == 401) {
                     setMessage('Повторите авторизацию')
                     return

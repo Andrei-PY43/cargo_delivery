@@ -9,7 +9,7 @@ export const DriverPageFoundOrder = ({ id, handleCloseWindow, removeOrder }) => 
 
         const ResponseFoundOrder = async () => {
             try {
-                const respons = await apiFetch(`/api/driver/orders/${Number(id)}/`)
+                const respons = await apiFetch(`/api/driver/orders/${id}/`)
                 if (respons.status == 401) {
                     setMessage('Повторите авторизацию')
                     return
@@ -47,6 +47,7 @@ export const DriverPageFoundOrder = ({ id, handleCloseWindow, removeOrder }) => 
                 setMessage('Ошибка доступа')
                 return
             }
+           
             if (!respons.ok) {
                 setMessage('Забрать заказ. Ошибка запроса ')
                 return
