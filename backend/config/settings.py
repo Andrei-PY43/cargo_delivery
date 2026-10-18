@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "accounts",
     "orders",
+    "chat",
 ]
 AUTH_USER_MODEL = "accounts.User"
 MIDDLEWARE = [

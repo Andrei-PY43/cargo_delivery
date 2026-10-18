@@ -1,6 +1,8 @@
 from accounts.models import User
 from django.db import models
 from django.db.models import PROTECT
+
+
 class Order(models.Model):
     class Status(models.TextChoices):
         PENDING = "pending", "Ожидает обработки"

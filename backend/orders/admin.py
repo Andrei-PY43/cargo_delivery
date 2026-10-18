@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import Order, OrderDriver, CargoFoto
 
-
+from django.utils.html import format_html
 class OrderDriverInline(admin.TabularInline):
     model = OrderDriver
     extra = 0
@@ -119,3 +119,44 @@ class OrderDriverAdmin(admin.ModelAdmin):
     @admin.display(description="Доставлено")
     def delivery_status(self, obj):
         return "Да" if obj.delivery else "Нет"
+
+
+
+@admin.register(CargoFoto)
+class CargoFotoAdmin(admin.ModelAdmin):
+    list_display = (
+        "order_number",
+        "client_info",
+        "photo_link",
+    )
+
+    search_fields = (
+        "order__id",
+        "order__client__first_name",
+        "order__client__last_name",
+    )
+
+    list_select_related = ("order", "order__client")
+    list_per_page = 25
+
+    @admin.display(description="Заказ", ordering="order__id")
+    def order_number(self, obj):
+        return f"Заказ № {obj.order.id}"
+
+    @admin.display(description="Клиент")
+    def client_info(self, obj):
+        client = obj.order.client
+        full_name = f"{client.first_name} {client.last_name}".strip()
+        return full_name or "Имя не указано"
+
+    @admin.display(description="Фотография")
+    def photo_link(self, obj):
+        if not obj.photo:
+            return "Фото отсутствует"
+
+        return format_html(
+            '<a href="{}" target="_blank" rel="noopener noreferrer">'
+            'Открыть фотографию'
+            '</a>',
+            obj.photo.url,
+        )
