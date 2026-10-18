@@ -1,12 +1,14 @@
 import { useContext, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Channel } from "../context/AuthContext.jsx"
-import './ModalWindowAuthoriz.css'
+import './Visual/ModalWindowAuthoriz.css'
+
 export const ModalWindowAuthoriz = ({ handleCloseAuth }) => {
     const [userName, setUserName] = useState('')
     const [userPassword, setUserPassword] = useState('')
     const [message, setMessage] = useState('')
     const { setUser } = useContext(Channel)
-
+    const navigate = useNavigate()
     async function handleAuthorization(event) {
         event.preventDefault()
 
@@ -57,7 +59,11 @@ export const ModalWindowAuthoriz = ({ handleCloseAuth }) => {
 
 
             setUser(userData)
-
+            if (userData.role === 'driver') {
+                navigate('/driver_search_orders/')
+            } else if (userData.role === 'client') {
+                navigate('/client_my_orders/')
+            }
             handleCloseAuth()
 
         } catch (error) {

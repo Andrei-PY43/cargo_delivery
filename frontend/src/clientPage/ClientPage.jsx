@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { apiFetch } from "../apiFetch/apiFetch"
-import "./ClientPage.css"
+import "./Visual/ClientPage.css"
+import { ChatOrder } from "../component/ChatOrder"
 export const ClientPage = () => {
-
+    const [windowChat, setWindowChat] = useState(null)
     const [dataClientOrders, setClientOrders] = useState([])
     const [message, setMessage] = useState('')
     useEffect(() => {
@@ -24,12 +25,18 @@ export const ClientPage = () => {
                 const data = await response.json()
                 setClientOrders(data)
             } catch (error) {
-                setMessage('Ошибка связи')
+                setMessage('Ошибка приложения')
                 console.log(error)
             }
         }
         getOrdersClient()
     }, [])
+    const closeChat =()=>{
+        console.log('Закрытие. windowChat до изменения:', windowChat)
+        setWindowChat(null)
+    }
+   
+console.log('ClientPage render. windowChat:', windowChat)
     return (
         <div className="client-page">
             {message ? <p className="client-message">{message}</p> : dataClientOrders.length !== 0 ? (
@@ -63,10 +70,11 @@ export const ClientPage = () => {
                                     </div>
                                 )}
                             </div>
-
-
+                            <div>
+                                <button onClick={()=>setWindowChat(order.order_id)}>Чат с водителем</button>
+                                {windowChat=== order.order_id && <ChatOrder order_id={order.order_id} closeChat={closeChat} />}
+                            </div>
                         </div>
-
                     )}
                 </div>) : (
                 <p>Заказов нет</p>

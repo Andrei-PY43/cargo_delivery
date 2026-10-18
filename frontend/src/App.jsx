@@ -15,19 +15,21 @@ import { DriverPageisDone } from './driverPage/DriverPageisDone.jsx';
 import { Footer } from './component/Footer'
 import { NoFound } from './pages/NoFound.jsx';
 import { DriverPageMyOrders } from "./driverPage/DriverPageMyOrders.jsx";
+import { Load } from "./component/Load.jsx";
 
 function App() {
-  const{user}=useContext(Channel)
-
+  const{user,load}=useContext(Channel)
+console.log('USER ROLE:', user?.role)
   return (
     <>
       <Header />
+      {load&&<Load/>}
       <Routes>
         <Route path='/' element={<MainPage />} />
         <Route path='/about/' element={<AboutPage />} />
         <Route path='/services/' element={<ServicesPage />} />
 
-        {user?.role === 'client' && (
+        {!load && user?.role === 'client' && (
           <>
             <Route path='/client_my_orders/' element={<ClientPage />} />
             <Route path='/client_my_orders_isDone/' element={<ClientPageisDone />} />
@@ -35,7 +37,7 @@ function App() {
             
           </>
         )}
-        {user?.role === 'driver' && (
+        {!load && user?.role === 'driver' && (
           <>
             <Route path='/driver_search_orders/' element={<DriverPage />} />
             <Route path='/driver_my_orders/' element={<DriverPageMyOrders/>}/>
@@ -44,7 +46,7 @@ function App() {
            
           </>)}
 
-        <Route path='*' element={<NoFound />} />
+        {!load && <Route path='*' element={<NoFound />} />}
       </Routes>
       <Footer />
     </>

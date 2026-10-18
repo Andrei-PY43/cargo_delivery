@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { apiFetch } from "../apiFetch/apiFetch"
-import "./ClientPageCreateOrder.css"
+import "./Visual/ClientPageCreateOrder.css"
 export const ClientPageCreateOrder = () => {
     const [address_load, setAddress_load] = useState('')
     const [address_delivery, setAddress_delivery] = useState('')

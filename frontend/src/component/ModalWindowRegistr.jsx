@@ -1,5 +1,5 @@
 import { useState } from "react"
-import './ModalWindowRegistr.css'
+import './Visual/ModalWindowRegistr.css'
 export const ModalWindowRegistr = ({ handleCloseReg }) => {
     const [userName, setUserName] = useState('')
     const [firstName, setFirstName] = useState('')

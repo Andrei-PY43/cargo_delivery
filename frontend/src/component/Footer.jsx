@@ -1,4 +1,4 @@
-import './Footer.css'
+import './Visual/Footer.css'
 
 export const Footer = () => {
     return (

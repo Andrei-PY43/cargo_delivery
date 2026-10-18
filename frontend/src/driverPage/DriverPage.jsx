@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { apiFetch } from "../apiFetch/apiFetch"
-import { DriverPageFoundOrder } from "../component/DriverFoundOrder"
-import "./DriverPage.css"
+import { DriverPageFoundOrder } from "../component/Driver/DriverFoundOrder"
+import "./Visual/DriverPage.css"
 export const DriverPage = () => {
     const [message, setMessage] = useState('')
     const [dataActive, setDataActive] = useState([])

@@ -1,6 +1,6 @@
 import { useState, useContext } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
-import "./Header.css"
+import "./Visual/Header.css"
 import { ModalWindowAuthoriz } from "./ModalWindowAuthoriz"
 import { ModalWindowRegistr } from "./ModalWindowRegistr"
 import { Channel } from "../context/AuthContext.jsx"

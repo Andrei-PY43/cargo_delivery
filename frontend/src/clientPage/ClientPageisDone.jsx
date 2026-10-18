@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { apiFetch } from "../apiFetch/apiFetch"
-import './ClientPageisDone.css'
+import './Visual/ClientPageisDone.css'
 
 export const ClientPageisDone = () => {
     const [message, setMessage] = useState('')
